@@ -4,6 +4,7 @@ syntax on
 set number
 set norelativenumber
 set cursorline
+set cursorcolumn
 set wrap
 set showcmd
 set wildmenu
@@ -83,8 +84,17 @@ map tu  :tabe<CR>
 map tl  :+tabnext<CR>
 map tj  :-tabnext<CR>
 
-"" vim plug
+"" complie function
+noremap r :call CompileCurrentFile()<CR>
+func! CompileCurrentFile()
+        exec "w"
+""        exec "MarkdownPreview"
+        if &filetype == 'vimwiki'
+          exec "MarkdownPreview"
+        endif
+endfunc
 
+"" vim-plug
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'vim-airline/vim-airline'
@@ -93,6 +103,14 @@ Plug 'connorholyday/vim-snazzy'
 "" youComplete me
 Plug 'ycm-core/YouCompleteMe'
 
+"" nerdTree
+Plug 'preservim/nerdtree'
+
+"" MarkDown Preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle'}
+"" Vim Wiki
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
@@ -111,3 +129,35 @@ color snazzy
 ""let g:ycm_python_interpreter_path = /bin/python3"
 ""let g:ycm_python_binary_path = /bin/python3"
 
+
+"" ===
+"" === nerdTreek
+"" ===
+
+
+"" ===
+"" === markdown-preview
+"" ===
+""let g:mkdp_auto_start = 0
+""let g:mkdp_auto_close = 1
+""let g:mkdp_refresh_slow = 0
+""let g:mkdp_command_for_global = 0
+""let g:mkdp_open_to_the_world = 0
+""let g:mkdp_open_ip = ''
+""let g:mkdp_browser = ''
+""let g:mkdp_echo_preview_url = 0
+""let g:mkdp_browserfunc = ''
+""let g:mkdp_preview_options = {
+""    \ 'mkit': {},
+""    \ 'katex': {},
+""    \ 'uml': {},
+""    \ 'maid': {},
+""    \ 'disable_sync_scroll': 0,
+""    \ 'sync_scroll_type': 'middle',
+""    \ 'hide_yaml_meta': 1
+""    \ }
+""let g:mkdp_markdown_css = ''
+""let g:mkdp_highlight_css = ''
+""let g:mkdp_port = ''
+""let g:mkdp_page_title = '「${name}」'
+source  ~/.config/nvim/md-snippets.vim
